@@ -9,11 +9,11 @@ use Twig\Error\SyntaxError;
 
 class Controller
 {
-//    private Environment $twig;
+//    public Environment $environment;
 //
-//    public function __construct(Environment $twig)
+//    public function __construct(Environment $environment)
 //    {
-//        $this->twig = $twig;
+//        $this->environment = $environment;
 //    }
 //
 //    /**
@@ -21,8 +21,8 @@ class Controller
 //     * @throws SyntaxError
 //     * @throws LoaderError
 //     */
-//    protected function render(string $template, array $data = []): string
+//    protected function render(string $template, array $context = []): string
 //    {
-//        return $this->twig->render($template, $data);
+//        return $this->environment->render($template, $context);
 //    }
 }
