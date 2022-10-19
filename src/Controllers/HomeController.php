@@ -5,34 +5,30 @@ namespace App\Controllers;
 use App\Core\Controller;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use Twig\Loader\FilesystemLoader;
 
 class HomeController extends Controller
 {
     /**
-     * @throws SyntaxError
      * @throws RuntimeError
+     * @throws SyntaxError
      * @throws LoaderError
      */
-    public function index(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function index(ServerRequestInterface $request): ResponseInterface
     {
-        $loader = new FilesystemLoader('src/views/templates');
-        $twig = new Environment($loader);
-
-        $temp = $twig->render('index.twig', ['name' => 'Vasia']);
-
-        $response->getBody()->write($temp);
-        return $response->withHeader('author', 'Vasiliy');
+        return $this->render('index', ['name' => 'Vasia']);
     }
 
-    public function name(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    /**
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws LoaderError
+     */
+    public function name(ServerRequestInterface $request): ResponseInterface
     {
         $name = $request->getAttribute('name');
-        $response->getBody()->write('Your name is '. $name);
-        return $response;
+        return $this->render('index', ['name' => $name]);
     }
 }

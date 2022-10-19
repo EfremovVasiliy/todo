@@ -2,9 +2,8 @@
 
 namespace App\Core;
 
+use App\Exceptions\InvalidRouteException;
 use Closure;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 
 class ActionResolver
 {
@@ -18,7 +17,7 @@ class ActionResolver
         }else if (is_string($handler)) {
             return new $handler();
         } else {
-            throw new \Exception('Unknown route');
+            throw new InvalidRouteException('Unknown route');
         }
     }
 }
