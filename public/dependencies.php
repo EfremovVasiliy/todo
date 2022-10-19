@@ -9,6 +9,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 $container = new Container(new ContainerBuilder());
 
-$container->getBuilder()->register(\Laminas\Diactoros\Response::class, \Laminas\Diactoros\Response::class);
+$container->getBuilder()->register(\Psr\Http\Message\ResponseInterface::class, \Laminas\Diactoros\Response::class);
 $container->getBuilder()->register(UserServiceRepositoryInterface::class, UserDatabaseRepository::class);
 $container->getBuilder()->register(UserService::class, UserService::class)->addArgument(new Reference(UserServiceRepositoryInterface::class));

@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Services\UserService\UserService;
-use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Twig\Error\LoaderError;
@@ -15,7 +14,7 @@ class UserController extends Controller
 {
     private UserService $userService;
 
-    public function __construct(UserService $userService, Response $response)
+    public function __construct(UserService $userService, ResponseInterface $response)
     {
         parent::__construct($response);
         $this->userService = $userService;
