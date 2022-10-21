@@ -9,7 +9,7 @@ $isDevMode = true;
 $proxyDir = null;
 $cache = null;
 $useSimpleAnnotationReader = false;
-$config = ORMSetup::createAnnotationMetadataConfiguration(array(__DIR__.'/../src/Models'), $isDevMode, $proxyDir, $cache, $useSimpleAnnotationReader);
+$config = ORMSetup::createAnnotationMetadataConfiguration(array(__DIR__ . '/../src/Models'), $isDevMode, $proxyDir, $cache, $useSimpleAnnotationReader);
 
 $connection = [
     'dbname' => 'todo',
