@@ -20,15 +20,4 @@ class HomeController extends Controller
     {
         return $this->render('index', ['name' => 'Vasia']);
     }
-
-    /**
-     * @throws RuntimeError
-     * @throws SyntaxError
-     * @throws LoaderError
-     */
-    public function name(ServerRequestInterface $request): ResponseInterface
-    {
-        $name = $request->getAttribute('name');
-        return $this->render('index', ['name' => $name]);
-    }
 }

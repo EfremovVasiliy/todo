@@ -1,11 +1,14 @@
 #!/usr/bin/env php
 <?php
 
+use App\Core\DB;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
 
-require_once('bootstrap.php');
+require_once('vendor/autoload.php');
+
+$entityManager = DB::db();
 
 /**
  * @var $entityManager EntityManager

@@ -3,8 +3,12 @@
  * @var $map Map
  */
 
+use App\Controllers\HomeController;
 use Aura\Router\Map;
-use Laminas\Diactoros\Response;
 
-$map->get('home.index', '/', [\App\Controllers\HomeController::class, 'index']);
+/**
+ * @var $container \App\Core\Container
+ */
+
+$map->get('home.index', '/', [HomeController::class, 'index']);
 $map->get('user.register', '/register', [\App\Controllers\UserController::class, 'register']);

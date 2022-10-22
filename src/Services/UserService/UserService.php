@@ -2,20 +2,21 @@
 
 namespace App\Services\UserService;
 
-use App\Services\UserService\Interfaces\UserServiceRepositoryInterface;
+use App\Entities\Task;
+use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\ServerRequestInterface;
 
 class UserService
 {
-    private UserServiceRepositoryInterface $repository;
+    private EntityManager $entityManager;
 
-    public function __construct(UserServiceRepositoryInterface $repository)
+    public function __construct(EntityManager $entityManager)
     {
-        $this->repository = $repository;
+        $this->entityManager = $entityManager;
     }
 
     public function register(ServerRequestInterface $request)
     {
-        return $this->repository->string;
+        return $this->entityManager->getRepository(Task::class)->getOne(1);
     }
 }

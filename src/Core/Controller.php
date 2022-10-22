@@ -2,7 +2,6 @@
 
 namespace App\Core;
 
-use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;
 use Twig\Environment;
 use Twig\Error\LoaderError;
@@ -10,17 +9,18 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
 
-class Controller
+abstract class Controller
 {
-    public Environment $environment;
-    private const TWIG_EXTENSION = '.twig';
+    private Environment $environment;
     private ResponseInterface $response;
+
+    private const TWIG_EXTENSION = '.twig';
 
     public function __construct(ResponseInterface $response)
     {
         $this->response = $response;
         
-        $loader = new FilesystemLoader('src/views/templates');
+        $loader = new FilesystemLoader('src/Views/templates');
         $environment = new Environment($loader);
         
         $this->environment = $environment;
