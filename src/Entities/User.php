@@ -2,9 +2,9 @@
 
 namespace App\Entities;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Persisters\Collection\ManyToManyPersister;
-use Doctrine\ORM\Persisters\Collection\OneToManyPersister;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repositories\UserDatabaseRepository")
@@ -38,10 +38,19 @@ class User
      */
     private string $passwordHash;
 
-//    /**
-//     * @ORM\OneToMany(targetEntity="App\Entities\Task", mappedBy="App\Entities\Task")
-//     */
-//    private $tasks;
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entities\Task", mappedBy="user")
+     * @var ArrayCollection
+     */
+    private ArrayCollection $tasks;
+
+    public function __construct(string $nickname, string $email, string $password)
+    {
+        $this->nickname = $nickname;
+        $this->email = $email;
+        $this->passwordHash = password_hash($password, 1);
+        $this->tasks = new ArrayCollection();
+    }
 
     /**
      * @return int|null
@@ -60,27 +69,11 @@ class User
     }
 
     /**
-     * @param string $nickname
-     */
-    public function setNickname(string $nickname): void
-    {
-        $this->nickname = $nickname;
-    }
-
-    /**
      * @return string
      */
     public function getEmail(): string
     {
         return $this->email;
-    }
-
-    /**
-     * @param string $email
-     */
-    public function setEmail(string $email): void
-    {
-        $this->email = $email;
     }
 
     /**
@@ -92,15 +85,10 @@ class User
     }
 
     /**
-     * @param string $password
+     * @return ArrayCollection
      */
-    public function setPasswordHash(string $password): void
+    public function getTasks(): ArrayCollection
     {
-        $this->passwordHash = password_hash($password, 1);
+        return $this->tasks;
     }
-
-//    public function getTasks()
-//    {
-//        return $this->tasks;
-//    }
 }

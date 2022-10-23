@@ -3,8 +3,6 @@
 namespace App\Entities;
 
 use DateTime;
-use Doctrine\DBAL\Types\DateTimeImmutableType;
-use Doctrine\DBAL\Types\DateTimeType;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,28 +15,42 @@ class Task
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
+     * @var int|null
      */
     private ?int $id = null;
 
     /**
      * @ORM\Column(type="string")
+     * @var string
      */
     private string $title;
 
     /**
      * @ORM\Column(type="string")
+     * @var string
      */
     private string $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entities\User", inversedBy="App\Entities\User")
+     * @ORM\ManyToOne(targetEntity="App\Entities\User", inversedBy="tasks")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @var User
      */
     private User $user;
 
     /**
      * @ORM\Column(type="datetime")
+     * @var DateTime
      */
-    private \DateTime $expires;
+    private DateTime $expires;
+
+    public function __construct(string $title, string $description, User $user, DateTime $expires)
+    {
+        $this->title = $title;
+        $this->description = $description;
+        $this->user = $user;
+        $this->expires = $expires;
+    }
 
     /**
      * @return int|null
@@ -57,27 +69,11 @@ class Task
     }
 
     /**
-     * @param string $title
-     */
-    public function setTitle(string $title): void
-    {
-        $this->title = $title;
-    }
-
-    /**
      * @return string
      */
     public function getDescription(): string
     {
         return $this->description;
-    }
-
-    /**
-     * @param string $description
-     */
-    public function setDescription(string $description): void
-    {
-        $this->description = $description;
     }
 
     /**
@@ -89,26 +85,10 @@ class Task
     }
 
     /**
-     * @param DateTime $expires
-     */
-    public function setExpires(DateTime $expires): void
-    {
-        $this->expires = $expires;
-    }
-
-    /**
      * @return User
      */
     public function getUser(): User
     {
         return $this->user;
-    }
-
-    /**
-     * @param User $user
-     */
-    public function setUser(User $user): void
-    {
-        $this->user = $user;
     }
 }

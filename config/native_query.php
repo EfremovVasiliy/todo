@@ -44,6 +44,16 @@ $taskEnt = $entityManager->getRepository(\App\Entities\Task::class)->getAll();
 //$query->setParameter(':id', 1);
 //$tasks = $query->getResult();
 
+$qb = $entityManager->createQueryBuilder();
+$qb->select('t')->from('App\Entities\Task', 't')->join('App\Entities\User', 'u')->orderBy('t.title');
+$query = $qb->getQuery();
+$tasks = $query->getResult();
+//foreach($user->getTasks() as $task) {
+//    echo "<pre>";
+//    print_r($task->getTitle());
+//    echo "</pre>";
+//}
+
 echo "<pre>";
-print_r($taskEnt);
+print_r($tasks[0]->getUser()->getEmail());
 echo "</pre>";
