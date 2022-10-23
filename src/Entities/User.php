@@ -40,9 +40,9 @@ class User
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entities\Task", mappedBy="user")
-     * @var ArrayCollection
+     * @var Collection
      */
-    private ArrayCollection $tasks;
+    private Collection $tasks;
 
     public function __construct(string $nickname, string $email, string $password)
     {
@@ -85,9 +85,9 @@ class User
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getTasks(): ArrayCollection
+    public function getTasks(): Collection
     {
         return $this->tasks;
     }

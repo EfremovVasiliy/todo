@@ -3,9 +3,10 @@
 namespace App\Repositories;
 
 use App\Entities\Task;
+use App\Services\TaskService\Interfaces\TaskServiceRepositoryInterface;
 use Doctrine\ORM\EntityRepository;
 
-class TaskDatabaseRepository extends EntityRepository
+class TaskDatabaseRepository extends EntityRepository implements TaskServiceRepositoryInterface
 {
     public function getAll(): array
     {

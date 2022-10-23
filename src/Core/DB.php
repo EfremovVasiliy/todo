@@ -8,7 +8,7 @@ use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\ORMSetup;
 use Psr\Cache\CacheItemPoolInterface;
 
-final class DB
+class DB
 {
     private static bool $isDevMode = true;
     private static ?string $proxyDir = null;

@@ -3,7 +3,6 @@
 namespace App\Core;
 
 use App\Exceptions\InvalidRouteException;
-use JetBrains\PhpStorm\NoReturn;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
