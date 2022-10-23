@@ -3,6 +3,7 @@
 namespace App\Services\UserService;
 
 use App\Entities\Task;
+use App\Entities\User;
 use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -15,8 +16,8 @@ class UserService
         $this->entityManager = $entityManager;
     }
 
-    public function register(ServerRequestInterface $request)
+    public function register(ServerRequestInterface $request): User
     {
-        return $this->entityManager->getRepository(Task::class)->getOne(1);
+        return $this->entityManager->getRepository(User::class)->getOne(1);
     }
 }

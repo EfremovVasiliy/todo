@@ -27,7 +27,7 @@ class UserController extends Controller
      */
     public function register(ServerRequestInterface $request): ResponseInterface
     {
-        $task = $this->userService->register($request);
-        return $this->render('user/register', ['task' => $task]);
+        $user = $this->userService->register($request);
+        return $this->render('user/register', ['user' => $user]);
     }
 }

@@ -30,7 +30,7 @@ final class DB
     public static function db(): EntityManager
     {
         self::$config = ORMSetup::createAnnotationMetadataConfiguration(
-            [__DIR__ . '/../src/Entities'],
+            [__DIR__ . '/../../src/Entities'],
             self::$isDevMode,
             self::$proxyDir,
             self::$cache,

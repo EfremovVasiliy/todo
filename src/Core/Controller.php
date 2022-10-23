@@ -7,6 +7,7 @@ use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 
 abstract class Controller
@@ -21,7 +22,10 @@ abstract class Controller
         $this->response = $response;
         
         $loader = new FilesystemLoader('src/Views/templates');
-        $environment = new Environment($loader);
+        $environment = new Environment($loader, [
+            'debug' => true
+        ]);
+        $environment->addExtension(new DebugExtension());
         
         $this->environment = $environment;
     }

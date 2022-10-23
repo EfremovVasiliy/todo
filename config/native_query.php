@@ -8,14 +8,29 @@ require_once('vendor/autoload.php');
  */
 $entityManager = DB::db();
 
-$qb = $entityManager->getRepository(\App\Entities\Task::class)->find(1);
-//$task = $entityManager->getRepository('App\Entities\Task')->findBy(['id' => [1, 2, 3, 4]]);
-//$task = $entityManager->getRepository(\App\Entities\Task::class)->getOne(1);
-//$task[0]->setTitle('Doctrine');
+//$user = new \App\Entities\User();
+//$user->setEmail('iroslav@iroslav.fe');
+//$user->setNickname('iroslav');
+//$user->setPasswordHash('qwerty');
+//$entityManager->persist($user);
+//$entityManager->flush();
+
+$user = $entityManager->getRepository(\App\Entities\User::class)->getOne(1);
+
+//$task = new \App\Entities\Task();
+//$task->setTitle('Some else Miroslav\'s title');
+//$task->setDescription('Some else Miroslav\'s description');
+//$task->setUser($user);
+//$task->setExpires(new DateTime('12-10-2023'));
 //$entityManager->persist($task);
 //$entityManager->flush();
 
-//$dql = "SELECT task FROM App\Entities\Task task WHERE task.id > :id";
+//$qb = $entityManager->getRepository(\App\Entities\Task::class)->find(1);
+//$task = $entityManager->getRepository('App\Entities\Task')->findBy(['id' => [1, 2, 3, 4]]);
+//$task = $entityManager->getRepository(\App\Entities\Task::class)->getOne(1);
+//$task[0]->setTitle('Doctrine');
+
+$taskEnt = $entityManager->getRepository(\App\Entities\Task::class)->getAll();
 //$rsm = new \Doctrine\ORM\Query\ResultSetMappingBuilder($entityManager);
 //$rsm->addRootEntityFromClassMetadata('App\Entities\Task', 'task');
 
@@ -30,5 +45,5 @@ $qb = $entityManager->getRepository(\App\Entities\Task::class)->find(1);
 //$tasks = $query->getResult();
 
 echo "<pre>";
-print_r($qb);
+print_r($taskEnt);
 echo "</pre>";
