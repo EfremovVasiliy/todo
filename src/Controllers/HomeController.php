@@ -18,6 +18,6 @@ class HomeController extends Controller
      */
     public function index(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->render('index', ['name' => 'Vasia']);
+        return $this->render('index', ['name' => 'vasia']);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Core;
 
-use Psr\Http\Message\ResponseInterface;
+use Laminas\Diactoros\Response;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -13,11 +13,11 @@ use Twig\Loader\FilesystemLoader;
 abstract class Controller
 {
     private Environment $environment;
-    private ResponseInterface $response;
+    protected Response $response;
 
     private const TWIG_EXTENSION = '.twig';
 
-    public function __construct(ResponseInterface $response)
+    public function __construct(Response $response)
     {
         $this->response = $response;
         
@@ -30,12 +30,22 @@ abstract class Controller
         $this->environment = $environment;
     }
 
+    public function addResponseHeader(string $headerName, string|int $headerValue): void
+    {
+        $this->response = $this->response->withHeader($headerName, $headerValue);
+    }
+
+    public function addResponseHeaders(array $header): void
+    {
+        $this->response = $this->response->withHeaders($header);
+    }
+
     /**
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws LoaderError
      */
-    protected function render(string $template, array $context = []): ResponseInterface
+    protected function render(string $template, array $context = []): Response
     {
         $data = $this->environment->render($template. self::TWIG_EXTENSION, $context);
         $this->response->getBody()->write($data);

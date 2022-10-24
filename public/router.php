@@ -1,18 +1,20 @@
 <?php
 
-// Routing
-use App\Controllers\HomeController;
 use App\Core\ActionResolver;
+use App\Core\Container;
+use App\Core\UriGeneragor;
 use Aura\Router\RouterContainer;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\ServerRequestFactory;
 
 /**
- * @var $container \App\Core\Container
+ * @var $container Container
  */
 $request = ServerRequestFactory::fromGlobals();
 
 $routerContainer = new RouterContainer();
+$generator = $routerContainer->getGenerator();
+
 $map = $routerContainer->getMap();
 
 require_once('public/routes.php');
@@ -20,6 +22,8 @@ require_once('public/routes.php');
 $matcher = $routerContainer->getMatcher();
 
 $resolver = new ActionResolver();
+
+$container->getBuilder()->register(UriGeneragor::class, UriGeneragor::class)->addArgument($generator);
 
 try {
     $result = $matcher->match($request);
