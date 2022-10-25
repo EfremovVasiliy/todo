@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function getSignupForm(): Response
     {
-        return $this->render('user/signup');
+        return $this->render('user/signup', 'Signup');
     }
 
     /**
@@ -39,7 +39,7 @@ class UserController extends Controller
      */
     public function getLoginFrom(): Response
     {
-        return $this->render('user/login');
+        return $this->render('user/login', 'Login');
     }
 
     /**
@@ -56,12 +56,13 @@ class UserController extends Controller
     /**
      * @param ServerRequestInterface $request
      * @return void
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
     public function login(ServerRequestInterface $request): void
     {
-        $user = $this->userService->register($request);
+        $user = $this->userService->login($request);
+        if ($user) {
+            setcookie('user_name', $user->getNickname());
+        }
 
         header('Location: /');
     }

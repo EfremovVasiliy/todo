@@ -20,7 +20,7 @@
     "doctrine/annotations": "1.13.2",
     "symfony/yaml": "^5.4",
     "symfony/cache": "^5.4",
-    "ext-http": "*"
+    "jasny/auth": "^2.2"
   },
   "autoload": {
     "psr-4": {

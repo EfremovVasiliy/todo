@@ -15,7 +15,8 @@ abstract class Controller
     private Environment $environment;
     protected Response $response;
 
-    private const TWIG_EXTENSION = '.twig';
+    protected const TWIG_EXTENSION = '.twig';
+    protected const TWIG_LAYOUT = 'layouts/main';
 
     public function __construct(Response $response)
     {
@@ -45,9 +46,15 @@ abstract class Controller
      * @throws SyntaxError
      * @throws LoaderError
      */
-    protected function render(string $template, array $context = []): Response
+    protected function render(string $template, string $title = 'Page', array $context = []): Response
     {
-        $data = $this->environment->render($template. self::TWIG_EXTENSION, $context);
+        $temp = $this->environment->render($template. self::TWIG_EXTENSION, $context);
+
+        $data = $this->environment->render(self::TWIG_LAYOUT. self::TWIG_EXTENSION, [
+            'content' => $temp,
+            'title' => $title
+        ]);
+
         $this->response->getBody()->write($data);
         return $this->response;
     }

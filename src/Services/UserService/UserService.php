@@ -45,7 +45,7 @@ class UserService
         $password = $request->getParsedBody()['password'];
         $user = $this->entityManager->getRepository(User::class)->getUserByEmail($email);
 
-        if ($user->passwordHash !== password_hash($password, 1)) {
+        if ($user->getPasswordHash() !== password_hash($password, 1)) {
             return false;
         }
 
