@@ -5,12 +5,14 @@ namespace App\Entities;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Jasny\Auth\ContextInterface as Context;
+use Jasny\Auth\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repositories\UserDatabaseRepository")
  * @ORM\Table(name="users")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -90,5 +92,30 @@ class User
     public function getTasks(): Collection
     {
         return $this->tasks;
+    }
+
+    public function getAuthId(): string
+    {
+        // TODO: Implement getAuthId() method.
+    }
+
+    public function verifyPassword(string $password): bool
+    {
+        // TODO: Implement verifyPassword() method.
+    }
+
+    public function getAuthChecksum(): string
+    {
+        // TODO: Implement getAuthChecksum() method.
+    }
+
+    public function getAuthRole(Context|null $context = null)
+    {
+        // TODO: Implement getAuthRole() method.
+    }
+
+    public function requiresMfa(): bool
+    {
+        // TODO: Implement requiresMfa() method.
     }
 }
