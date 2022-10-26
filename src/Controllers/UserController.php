@@ -29,6 +29,9 @@ class UserController extends Controller
      */
     public function getSignupForm(): Response
     {
+        if ($this->userService->checkAuth()) {
+            header('Location: /');
+        }
         return $this->render('user/signup', 'Signup');
     }
 
@@ -39,6 +42,9 @@ class UserController extends Controller
      */
     public function getLoginFrom(): Response
     {
+        if ($this->userService->checkAuth()) {
+            header('Location: /');
+        }
         return $this->render('user/login', 'Login');
     }
 
@@ -48,8 +54,10 @@ class UserController extends Controller
      */
     public function register(ServerRequestInterface $request): void
     {
-        $user = $this->userService->register($request);
 
+        if (!$this->userService->checkAuth()) {
+            $this->userService->register($request);
+        }
         header('Location: /');
     }
 
@@ -59,11 +67,19 @@ class UserController extends Controller
      */
     public function login(ServerRequestInterface $request): void
     {
-        $user = $this->userService->login($request);
-        if ($user) {
-            setcookie('user_name', $user->getNickname());
+        if (!$this->userService->login($request)) {
+            header('Location: /signin');
         }
-
         header('Location: /');
+    }
+
+    /**
+     * @return void
+     */
+    public function logout(): void
+    {
+        unset($_SESSION['user_id']);
+        unset($_SESSION['username']);
+        header('Location: /signin');
     }
 }

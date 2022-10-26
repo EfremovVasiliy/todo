@@ -5,14 +5,12 @@ namespace App\Entities;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Jasny\Auth\ContextInterface as Context;
-use Jasny\Auth\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repositories\UserDatabaseRepository")
  * @ORM\Table(name="users")
  */
-class User implements UserInterface
+class User
 {
     /**
      * @ORM\Id()
@@ -26,7 +24,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", unique="true")
      * @var string
      */
-    private string $nickname;
+    private string $username;
 
     /**
      * @ORM\Column(type="string", unique="true")
@@ -46,11 +44,11 @@ class User implements UserInterface
      */
     private Collection $tasks;
 
-    public function __construct(string $nickname, string $email, string $password)
+    public function __construct(string $username, string $email, string $password)
     {
-        $this->nickname = $nickname;
+        $this->username = $username;
         $this->email = $email;
-        $this->passwordHash = password_hash($password, 1);
+        $this->passwordHash = md5($password);
         $this->tasks = new ArrayCollection();
     }
 
@@ -65,9 +63,9 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getNickname(): string
+    public function getUsername(): string
     {
-        return $this->nickname;
+        return $this->username;
     }
 
     /**
@@ -92,30 +90,5 @@ class User implements UserInterface
     public function getTasks(): Collection
     {
         return $this->tasks;
-    }
-
-    public function getAuthId(): string
-    {
-        // TODO: Implement getAuthId() method.
-    }
-
-    public function verifyPassword(string $password): bool
-    {
-        // TODO: Implement verifyPassword() method.
-    }
-
-    public function getAuthChecksum(): string
-    {
-        // TODO: Implement getAuthChecksum() method.
-    }
-
-    public function getAuthRole(Context|null $context = null)
-    {
-        // TODO: Implement getAuthRole() method.
-    }
-
-    public function requiresMfa(): bool
-    {
-        // TODO: Implement requiresMfa() method.
     }
 }

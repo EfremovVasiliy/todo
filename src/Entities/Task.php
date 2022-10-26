@@ -40,6 +40,13 @@ class Task
 
     /**
      * @ORM\Column(type="datetime")
+     * @ORM\GeneratedValue()
+     * @var DateTime
+     */
+    private DateTime $created_at;
+
+    /**
+     * @ORM\Column(type="datetime")
      * @var DateTime
      */
     private DateTime $expires;
@@ -90,5 +97,13 @@ class Task
     public function getUser(): User
     {
         return $this->user;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt(): DateTime
+    {
+        return $this->created_at;
     }
 }

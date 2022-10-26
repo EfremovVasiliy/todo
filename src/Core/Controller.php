@@ -52,7 +52,8 @@ abstract class Controller
 
         $data = $this->environment->render(self::TWIG_LAYOUT. self::TWIG_EXTENSION, [
             'content' => $temp,
-            'title' => $title
+            'title' => $title,
+            'session' => $_SESSION
         ]);
 
         $this->response->getBody()->write($data);
