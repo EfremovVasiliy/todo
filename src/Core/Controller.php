@@ -18,10 +18,8 @@ abstract class Controller
     protected const TWIG_EXTENSION = '.twig';
     protected const TWIG_LAYOUT = 'layouts/main';
 
-    public function __construct(Response $response)
+    public function __construct()
     {
-        $this->response = $response;
-        
         $loader = new FilesystemLoader('src/Views/templates');
         $environment = new Environment($loader, [
             'debug' => true
@@ -29,6 +27,7 @@ abstract class Controller
         $environment->addExtension(new DebugExtension());
         
         $this->environment = $environment;
+        $this->response = new Response();
     }
 
     public function addResponseHeader(string $headerName, string|int $headerValue): void
@@ -46,7 +45,7 @@ abstract class Controller
      * @throws SyntaxError
      * @throws LoaderError
      */
-    protected function render(string $template, string $title = 'Page', array $context = []): Response
+    protected function html(string $template, string $title = 'Page', array $context = []): Response
     {
         $temp = $this->environment->render($template. self::TWIG_EXTENSION, $context);
 
@@ -58,5 +57,10 @@ abstract class Controller
 
         $this->response->getBody()->write($data);
         return $this->response;
+    }
+
+    protected function json(array $data, int $status = 200, array $headers = []): Response\JsonResponse
+    {
+        return (new Response\JsonResponse($data, $status, $headers));
     }
 }

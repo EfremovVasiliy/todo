@@ -11,8 +11,9 @@ use Aura\Router\Map;
 
 $map->get('task.index', '/', [\App\Controllers\TaskController::class, 'index']);
 $map->get('task.create', '/create', [\App\Controllers\TaskController::class, 'create']);
-$map->get('task.update', '/update', [\App\Controllers\TaskController::class, 'index']);
-$map->get('task.delete', '/delete', [\App\Controllers\TaskController::class, 'index']);
+$map->post('task.store', '/store', [\App\Controllers\TaskController::class, 'store']);
+$map->put('task.update', '/update', [\App\Controllers\TaskController::class, 'index']);
+$map->delete('task.delete', '/delete', [\App\Controllers\TaskController::class, 'index']);
 $map->get('user.signup-form', '/signup', [\App\Controllers\UserController::class, 'getSignupForm']);
 $map->post('user.register', '/register', [\App\Controllers\UserController::class, 'register']);
 $map->get('user.login-form', '/signin', [\App\Controllers\UserController::class, 'getLoginFrom']);

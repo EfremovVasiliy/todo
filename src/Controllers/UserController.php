@@ -16,9 +16,9 @@ class UserController extends Controller
 {
     private UserService $userService;
 
-    public function __construct(UserService $userService, Response $response)
+    public function __construct(UserService $userService)
     {
-        parent::__construct($response);
+        parent::__construct();
         $this->userService = $userService;
     }
 
@@ -32,7 +32,7 @@ class UserController extends Controller
         if ($this->userService->checkAuth()) {
             header('Location: /');
         }
-        return $this->render('user/signup', 'Signup');
+        return $this->html('user/signup', 'Signup');
     }
 
     /**
@@ -45,7 +45,7 @@ class UserController extends Controller
         if ($this->userService->checkAuth()) {
             header('Location: /');
         }
-        return $this->render('user/login', 'Login');
+        return $this->html('user/login', 'Login');
     }
 
     /**
