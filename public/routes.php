@@ -22,4 +22,6 @@ $map->get('user.signup-form', '/signup', [UserController::class, 'getSignupForm'
 $map->post('user.register', '/register', [UserController::class, 'register']);
 $map->get('user.login-form', '/signin', [UserController::class, 'getLoginFrom']);
 $map->post('user.login', '/login', [UserController::class, 'login']);
+$map->get('user.change-from', '/change', [UserController::class, 'getChangePasswordForm'])->auth(true);
+$map->post('user.change', '/change-pass', [UserController::class, 'change'])->auth(true);
 $map->post('user.logout', '/logout', [UserController::class, 'logout'])->auth(true);

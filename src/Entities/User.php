@@ -91,4 +91,12 @@ class User
     {
         return $this->tasks;
     }
+
+    /**
+     * @param string $password
+     */
+    public function setPasswordHash(string $password): void
+    {
+        $this->passwordHash = md5($password);
+    }
 }

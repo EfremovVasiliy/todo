@@ -29,4 +29,19 @@ class UserDatabaseRepository extends EntityRepository implements UserServiceRepo
         $result = $query->getQuery();
         return $result->getResult()[0];
     }
+
+    public function changePassword(string $currentPassword, string $newPassword, int $userId): array
+    {
+        $user = $this->_em->getRepository(User::class)->getOne($userId);
+        $errors = [];
+        if ($user->getPasswordHash() !== md5($currentPassword)) {
+            $errors[] = 'Incorrect current password';
+            return $errors;
+        } else {
+            $user->setPasswordHash($newPassword);
+            $this->_em->persist($user);
+            $this->_em->flush();
+        }
+        return $errors;
+    }
 }

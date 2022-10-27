@@ -6,6 +6,7 @@ class Auth
 {
     public static function check(): bool
     {
-        return (bool)$_SESSION;
+        if (isset($_SESSION['user_id'])) return true;
+        return false;
     }
 }

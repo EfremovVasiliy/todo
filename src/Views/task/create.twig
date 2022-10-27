@@ -1,5 +1,14 @@
 
 <div class="col-lg-6 m-auto mt-5">
+    {% if errors %}
+        <div class="mb-5">
+            <ul class="list-group">
+                {% for error in errors %}
+                    <li class="list-group-item">{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
     <form method="post" action="/store">
         <div class="mb-3">
             <label for="task_title" class="form-label">Task title</label>

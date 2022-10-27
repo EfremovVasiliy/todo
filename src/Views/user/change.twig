@@ -1,0 +1,23 @@
+
+<div class="col-lg-6 m-auto mt-5">
+    {% if errors %}
+        <div class="mb-5">
+            <ul class="list-group">
+                {% for error in errors %}
+                    <li class="list-group-item">{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <form method="post" action="/change-pass">
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Current password</label>
+            <input type="password" name="current_password" class="form-control" id="exampleInputPassword1">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword2" class="form-label">New password</label>
+            <input type="password" name="new_password" class="form-control" id="exampleInputPassword2">
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
