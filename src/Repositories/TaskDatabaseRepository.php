@@ -23,6 +23,7 @@ class TaskDatabaseRepository extends EntityRepository implements TaskServiceRepo
     public function createTask(string $title, string $description, DateTime $expires, User $user): Task
     {
         $task = new Task($title, $description, $expires, $user);
+
         $this->_em->persist($task);
         $this->_em->flush();
 
@@ -32,7 +33,20 @@ class TaskDatabaseRepository extends EntityRepository implements TaskServiceRepo
     public function deleteTask(int $taskId)
     {
         $task = $this->getOne($taskId);
+
         $this->_em->remove($task);
+        $this->_em->flush();
+    }
+
+    public function editTask(int $id, string $title, string $description, DateTime $expires)
+    {
+        $task = $this->_em->getRepository(Task::class)->getOne($id);
+
+        $task->setTitle($title);
+        $task->setDescription($description);
+        $task->setExpires($expires);
+
+        $this->_em->persist($task);
         $this->_em->flush();
     }
 }

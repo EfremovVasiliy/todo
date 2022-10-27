@@ -1,0 +1,19 @@
+
+<div class="col-lg-6 m-auto mt-5">
+    <form method="post" action="/edit">
+        <div class="mb-3">
+            <label for="task_title" class="form-label">Task title</label>
+            <input type="text" value="{{ task.getTitle() }}" name="title" class="form-control" id="task_title" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="task_description" class="form-label">Task description</label>
+            <textarea name="description" id="task_description" cols="30" rows="5" class="form-control">{{ task.getDescription() }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="task_expires" class="form-label">Expires</label>
+            <input value="{{ task.getExpires().format('d-m-Y h:i:s') }}" type="datetime-local" name="expires" class="form-control" id="task_expires">
+        </div>
+        <input name="task_id" value="{{ task.getId() }}" type="hidden">
+        <button type="submit" class="btn btn-primary">Update task</button>
+    </form>
+</div>

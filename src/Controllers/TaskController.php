@@ -56,18 +56,36 @@ class TaskController extends Controller
         header('Location: /');
     }
 
-    public function update(ServerRequestInterface $request)
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
+    public function update(ServerRequestInterface $request): Response
     {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /signin');
+        }
+        $id = $request->getAttribute('id');
+        $task = $this->taskService->find($id);
 
+        return $this->html('task/update', 'Update task', ['task' => $task]);
     }
 
     public function edit(ServerRequestInterface $request)
     {
-
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /signin');
+        }
+        $this->taskService->edit($request);
+        header('Location: /');
     }
 
     public function delete(ServerRequestInterface $request)
     {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /signin');
+        }
         $this->taskService->delete($request);
         header('Location: /');
     }

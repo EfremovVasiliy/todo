@@ -21,7 +21,8 @@
                         <ol class="widget-49-meeting-points">
                             {{ task.getDescription() }}
                         </ol>
-                        <div class="widget-49-meeting-action">
+                        <div class="widget-49-meeting-action d-flex justify-content-between">
+                            <a class="btn btn-sm btn-flash-border-success" href="/update/{{ task.getId() }}">Update task</a>
                             <form action="/delete" method="post">
                                 <input type="hidden" name="task_id" value="{{ task.getId() }}">
                                 <input class="btn btn-sm btn-flash-border-success" type="submit" value="Delete task">

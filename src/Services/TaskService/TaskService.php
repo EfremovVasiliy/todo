@@ -17,6 +17,15 @@ class TaskService
     }
 
     /**
+     * @param int $id
+     * @return Task
+     */
+    public function find(int $id): Task
+    {
+        return $this->entityManager->getRepository(Task::class)->getOne($id);
+    }
+
+    /**
      * @throws \Exception
      */
     public function create(ServerRequestInterface $request): Task
@@ -30,8 +39,27 @@ class TaskService
         return $this->entityManager->getRepository(Task::class)->createTask($title, $description, $expires, $user);
     }
 
-    public function delete(ServerRequestInterface $request)
+    /**
+     * @param ServerRequestInterface $request
+     * @return void
+     */
+    public function delete(ServerRequestInterface $request): void
     {
         $this->entityManager->getRepository(Task::class)->deleteTask($request->getParsedBody()['task_id']);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function edit(ServerRequestInterface $request): void
+    {
+        $id = $request->getParsedBody()['task_id'];
+        $title = $request->getParsedBody()['title'];
+        $description = $request->getParsedBody()['description'];
+        $expires = $request->getParsedBody()['expires'];
+        $expires = new \DateTime($expires);
+        $user = $this->entityManager->getRepository(User::class)->getOne($_SESSION['user_id']);
+
+        $this->entityManager->getRepository(Task::class)->editTask($id, $title, $description, $expires);
     }
 }

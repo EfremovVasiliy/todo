@@ -106,4 +106,28 @@ class Task
     {
         return $this->created_at;
     }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @param DateTime $expires
+     */
+    public function setExpires(DateTime $expires): void
+    {
+        $this->expires = $expires;
+    }
 }
