@@ -3,20 +3,23 @@
  * @var $map Map
  */
 
+use App\Controllers\TaskController;
+use App\Controllers\UserController;
+use App\Core\Container;
 use Aura\Router\Map;
 
 /**
- * @var $container \App\Core\Container
+ * @var $container Container
  */
 
-$map->get('task.index', '/', [\App\Controllers\TaskController::class, 'index']);
-$map->get('task.create', '/create', [\App\Controllers\TaskController::class, 'create']);
-$map->post('task.store', '/store', [\App\Controllers\TaskController::class, 'store']);
-$map->post('task.edit', '/edit', [\App\Controllers\TaskController::class, 'edit']);
-$map->get('task.update', '/update/{id}', [\App\Controllers\TaskController::class, 'update']);
-$map->post('task.delete', '/delete', [\App\Controllers\TaskController::class, 'delete']);
-$map->get('user.signup-form', '/signup', [\App\Controllers\UserController::class, 'getSignupForm']);
-$map->post('user.register', '/register', [\App\Controllers\UserController::class, 'register']);
-$map->get('user.login-form', '/signin', [\App\Controllers\UserController::class, 'getLoginFrom']);
-$map->post('user.login', '/login', [\App\Controllers\UserController::class, 'login']);
-$map->post('user.logout', '/logout', [\App\Controllers\UserController::class, 'logout']);
+$map->get('task.index', '/', [TaskController::class, 'index'])->auth(true);
+$map->get('task.create', '/create', [TaskController::class, 'create'])->auth(true);
+$map->post('task.store', '/store', [TaskController::class, 'store'])->auth(true);
+$map->post('task.edit', '/edit', [TaskController::class, 'edit'])->auth(true);
+$map->get('task.update', '/update/{id}', [TaskController::class, 'update'])->tokens(['id' => '\d+'])->auth(true);
+$map->post('task.delete', '/delete', [TaskController::class, 'delete'])->auth(true);
+$map->get('user.signup-form', '/signup', [UserController::class, 'getSignupForm']);
+$map->post('user.register', '/register', [UserController::class, 'register']);
+$map->get('user.login-form', '/signin', [UserController::class, 'getLoginFrom']);
+$map->post('user.login', '/login', [UserController::class, 'login']);
+$map->post('user.logout', '/logout', [UserController::class, 'logout'])->auth(true);

@@ -20,7 +20,7 @@ abstract class Controller
 
     public function __construct()
     {
-        $loader = new FilesystemLoader('src/Views/templates');
+        $loader = new FilesystemLoader('src/Views');
         $environment = new Environment($loader, [
             'debug' => true
         ]);

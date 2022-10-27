@@ -1,8 +1,8 @@
 <?php
 
 use App\Core\ActionResolver;
+use App\Core\Auth;
 use App\Core\Container;
-use App\Core\UriGeneragor;
 use Aura\Router\RouterContainer;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\ServerRequestFactory;
@@ -13,7 +13,6 @@ use Laminas\Diactoros\ServerRequestFactory;
 $request = ServerRequestFactory::fromGlobals();
 
 $routerContainer = new RouterContainer();
-$generator = $routerContainer->getGenerator();
 
 $map = $routerContainer->getMap();
 
@@ -23,10 +22,12 @@ $matcher = $routerContainer->getMatcher();
 
 $resolver = new ActionResolver();
 
-$container->getBuilder()->register(UriGeneragor::class, UriGeneragor::class)->addArgument($generator);
-
 try {
     $result = $matcher->match($request);
+
+    if ($result->auth && Auth::check() === false) {
+        header('Location: /signin');
+    }
 
     foreach($result->attributes as $key => $value) {
         $request = $request->withAttribute($key, $value);

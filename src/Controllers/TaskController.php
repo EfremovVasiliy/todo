@@ -19,6 +19,7 @@ class TaskController extends Controller
     public function __construct(TaskService $taskService, UserService $userService)
     {
         parent::__construct();
+
         $this->taskService = $taskService;
         $this->userService = $userService;
     }
@@ -30,9 +31,6 @@ class TaskController extends Controller
      */
     public function index(): Response
     {
-        if (!isset($_SESSION['user_id'])) {
-            header('Location: /signin');
-        }
         $user = $this->userService->getUserById($_SESSION['user_id']);
         return $this->html('task/index', 'Tasks', ['tasks' => $user->getTasks()]);
     }
@@ -48,11 +46,13 @@ class TaskController extends Controller
     }
 
     /**
+     * @param ServerRequestInterface $request
+     * @return void
      * @throws \Exception
      */
-    public function store(ServerRequestInterface $request)
+    public function store(ServerRequestInterface $request): void
     {
-        $task = $this->taskService->create($request);
+        $this->taskService->create($request);
         header('Location: /');
     }
 
@@ -63,29 +63,29 @@ class TaskController extends Controller
      */
     public function update(ServerRequestInterface $request): Response
     {
-        if (!isset($_SESSION['user_id'])) {
-            header('Location: /signin');
-        }
         $id = $request->getAttribute('id');
         $task = $this->taskService->find($id);
 
         return $this->html('task/update', 'Update task', ['task' => $task]);
     }
 
-    public function edit(ServerRequestInterface $request)
+    /**
+     * @param ServerRequestInterface $request
+     * @return void
+     * @throws \Exception
+     */
+    public function edit(ServerRequestInterface $request): void
     {
-        if (!isset($_SESSION['user_id'])) {
-            header('Location: /signin');
-        }
         $this->taskService->edit($request);
         header('Location: /');
     }
 
-    public function delete(ServerRequestInterface $request)
+    /**
+     * @param ServerRequestInterface $request
+     * @return void
+     */
+    public function delete(ServerRequestInterface $request): void
     {
-        if (!isset($_SESSION['user_id'])) {
-            header('Location: /signin');
-        }
         $this->taskService->delete($request);
         header('Location: /');
     }

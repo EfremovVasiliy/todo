@@ -61,15 +61,6 @@ class UserService
         return false;
     }
 
-    public function checkAuth(): bool
-    {
-        if (isset($_SESSION['user_id'])) {
-            return true;
-        }
-
-        return false;
-    }
-
     public function getUserById(int $id): User
     {
         return $this->entityManager->getRepository(User::class)->getOne($id);

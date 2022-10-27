@@ -15,7 +15,7 @@
                             </div>
                             <div class="widget-49-meeting-info">
                                 <span class="widget-49-pro-title">{{ task.getTitle() }}</span>
-                                <span class="widget-49-meeting-time">Expires: {{ task.getExpires().format('Y-m-d h:i:s') }}</span>
+                                <span class="widget-49-meeting-time">Expires: {{ task.getExpires().format('d-m-Y h:i:s') }}</span>
                             </div>
                         </div>
                         <ol class="widget-49-meeting-points">
@@ -25,7 +25,7 @@
                             <a class="btn btn-sm btn-flash-border-success" href="/update/{{ task.getId() }}">Update task</a>
                             <form action="/delete" method="post">
                                 <input type="hidden" name="task_id" value="{{ task.getId() }}">
-                                <input class="btn btn-sm btn-flash-border-success" type="submit" value="Delete task">
+                                <input class="btn btn-sm btn-flash-border-success" type="submit" value="DELETE TASK">
                             </form>
                         </div>
                     </div>

@@ -26,9 +26,11 @@ class TaskService
     }
 
     /**
+     * @param ServerRequestInterface $request
+     * @return Task
      * @throws \Exception
      */
-    public function create(ServerRequestInterface $request): Task
+    public function create(ServerRequestInterface $request): void
     {
         $title = $request->getParsedBody()['title'];
         $description = $request->getParsedBody()['description'];
@@ -36,7 +38,7 @@ class TaskService
         $expires = new \DateTime($expires);
         $user = $this->entityManager->getRepository(User::class)->getOne($_SESSION['user_id']);
 
-        return $this->entityManager->getRepository(Task::class)->createTask($title, $description, $expires, $user);
+        $this->entityManager->getRepository(Task::class)->createTask($title, $description, $expires, $user);
     }
 
     /**
@@ -49,6 +51,8 @@ class TaskService
     }
 
     /**
+     * @param ServerRequestInterface $request
+     * @return void
      * @throws \Exception
      */
     public function edit(ServerRequestInterface $request): void
@@ -58,7 +62,6 @@ class TaskService
         $description = $request->getParsedBody()['description'];
         $expires = $request->getParsedBody()['expires'];
         $expires = new \DateTime($expires);
-        $user = $this->entityManager->getRepository(User::class)->getOne($_SESSION['user_id']);
 
         $this->entityManager->getRepository(Task::class)->editTask($id, $title, $description, $expires);
     }

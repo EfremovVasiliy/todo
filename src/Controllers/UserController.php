@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Core\Auth;
 use App\Core\Controller;
 use App\Services\UserService\UserService;
 use Doctrine\ORM\Exception\ORMException;
@@ -29,7 +30,7 @@ class UserController extends Controller
      */
     public function getSignupForm(): Response
     {
-        if ($this->userService->checkAuth()) {
+        if (Auth::check()) {
             header('Location: /');
         }
         return $this->html('user/signup', 'Signup');
@@ -42,7 +43,7 @@ class UserController extends Controller
      */
     public function getLoginFrom(): Response
     {
-        if ($this->userService->checkAuth()) {
+        if (Auth::check()) {
             header('Location: /');
         }
         return $this->html('user/login', 'Login');
@@ -55,7 +56,7 @@ class UserController extends Controller
     public function register(ServerRequestInterface $request): void
     {
 
-        if (!$this->userService->checkAuth()) {
+        if (!Auth::check()) {
             $this->userService->register($request);
         }
         header('Location: /');
