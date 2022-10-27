@@ -19,7 +19,7 @@ class TaskService
     /**
      * @throws \Exception
      */
-    public function create(ServerRequestInterface $request)
+    public function create(ServerRequestInterface $request): Task
     {
         $title = $request->getParsedBody()['title'];
         $description = $request->getParsedBody()['description'];
@@ -28,5 +28,10 @@ class TaskService
         $user = $this->entityManager->getRepository(User::class)->getOne($_SESSION['user_id']);
 
         return $this->entityManager->getRepository(Task::class)->createTask($title, $description, $expires, $user);
+    }
+
+    public function delete(ServerRequestInterface $request)
+    {
+        $this->entityManager->getRepository(Task::class)->deleteTask($request->getParsedBody()['task_id']);
     }
 }

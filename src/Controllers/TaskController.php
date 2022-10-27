@@ -30,9 +30,10 @@ class TaskController extends Controller
      */
     public function index(): Response
     {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /signin');
+        }
         $user = $this->userService->getUserById($_SESSION['user_id']);
-//        $task = $user->getTasks()[0];
-//        dd($task->getCreatedAt()->format('d'));
         return $this->html('task/index', 'Tasks', ['tasks' => $user->getTasks()]);
     }
 
@@ -55,7 +56,7 @@ class TaskController extends Controller
         header('Location: /');
     }
 
-    public function update()
+    public function update(ServerRequestInterface $request)
     {
 
     }
@@ -67,6 +68,7 @@ class TaskController extends Controller
 
     public function delete(ServerRequestInterface $request)
     {
-        return 'hello';
+        $this->taskService->delete($request);
+        header('Location: /');
     }
 }

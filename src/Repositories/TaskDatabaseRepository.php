@@ -28,4 +28,11 @@ class TaskDatabaseRepository extends EntityRepository implements TaskServiceRepo
 
         return $task;
     }
+
+    public function deleteTask(int $taskId)
+    {
+        $task = $this->getOne($taskId);
+        $this->_em->remove($task);
+        $this->_em->flush();
+    }
 }

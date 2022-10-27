@@ -23,5 +23,11 @@
   "homepage": "https://github.com/EfremovVasiliy/todo#readme",
   "dependencies": {
     "jquery": "^3.6.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.19.6",
+    "@babel/node": "^7.19.1",
+    "@babel/preset-env": "^7.19.4"
   }
 }
