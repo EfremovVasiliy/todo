@@ -1,0 +1,18 @@
+
+<div class="col-lg-6 m-auto mt-5">
+    <form method="post" action="/store">
+        <div class="mb-3">
+            <label for="task_title" class="form-label">Task title</label>
+            <input type="text" name="title" class="form-control" id="task_title" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="task_description" class="form-label">Task description</label>
+            <input type="text" name="description" class="form-control" id="task_description" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="task_expires" class="form-label">Expires</label>
+            <input type="datetime-local" name="expires" class="form-control" id="task_expires">
+        </div>
+        <button type="submit" class="btn btn-primary">Create task</button>
+    </form>
+</div>

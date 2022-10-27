@@ -30,8 +30,10 @@ class TaskController extends Controller
      */
     public function index(): Response
     {
-//        $user = $this->userService->getUserById($_SESSION['user_id']);
-        return $this->html('task/index', 'Tasks');
+        $user = $this->userService->getUserById($_SESSION['user_id']);
+//        $task = $user->getTasks()[0];
+//        dd($task->getCreatedAt()->format('d'));
+        return $this->html('task/index', 'Tasks', ['tasks' => $user->getTasks()]);
     }
 
     /**
@@ -44,9 +46,13 @@ class TaskController extends Controller
         return $this->html('task/create', 'Create new task');
     }
 
-    public function store(): Response\JsonResponse
+    /**
+     * @throws \Exception
+     */
+    public function store(ServerRequestInterface $request)
     {
-        return $this->json(['he' => 'llo']);
+        $task = $this->taskService->create($request);
+        header('Location: /');
     }
 
     public function update()
@@ -59,8 +65,8 @@ class TaskController extends Controller
 
     }
 
-    public function delete()
+    public function delete(ServerRequestInterface $request)
     {
-
+        return 'hello';
     }
 }

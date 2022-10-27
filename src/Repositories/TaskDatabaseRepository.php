@@ -3,7 +3,9 @@
 namespace App\Repositories;
 
 use App\Entities\Task;
+use App\Entities\User;
 use App\Services\TaskService\Interfaces\TaskServiceRepositoryInterface;
+use DateTime;
 use Doctrine\ORM\EntityRepository;
 
 class TaskDatabaseRepository extends EntityRepository implements TaskServiceRepositoryInterface
@@ -16,5 +18,14 @@ class TaskDatabaseRepository extends EntityRepository implements TaskServiceRepo
     public function getOne(int $id): Task
     {
         return $this->_em->getRepository(Task::class)->find($id);
+    }
+
+    public function createTask(string $title, string $description, DateTime $expires, User $user): Task
+    {
+        $task = new Task($title, $description, $expires, $user);
+        $this->_em->persist($task);
+        $this->_em->flush();
+
+        return $task;
     }
 }

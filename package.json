@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/EfremovVasiliy/todo/issues"
   },
-  "homepage": "https://github.com/EfremovVasiliy/todo#readme"
+  "homepage": "https://github.com/EfremovVasiliy/todo#readme",
+  "dependencies": {
+    "jquery": "^3.6.1"
+  }
 }

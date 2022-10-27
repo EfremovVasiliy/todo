@@ -27,7 +27,6 @@ class UserDatabaseRepository extends EntityRepository implements UserServiceRepo
             ->setParameter(':email', $email);
 
         $result = $query->getQuery();
-
         return $result->getResult()[0];
     }
 }

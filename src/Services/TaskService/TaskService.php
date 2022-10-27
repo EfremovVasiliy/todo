@@ -2,7 +2,10 @@
 
 namespace App\Services\TaskService;
 
+use App\Entities\Task;
+use App\Entities\User;
 use Doctrine\ORM\EntityManager;
+use Psr\Http\Message\ServerRequestInterface;
 
 class TaskService
 {
@@ -13,8 +16,17 @@ class TaskService
         $this->entityManager = $entityManager;
     }
 
-    public function create()
+    /**
+     * @throws \Exception
+     */
+    public function create(ServerRequestInterface $request)
     {
+        $title = $request->getParsedBody()['title'];
+        $description = $request->getParsedBody()['description'];
+        $expires = $request->getParsedBody()['expires'];
+        $expires = new \DateTime($expires);
+        $user = $this->entityManager->getRepository(User::class)->getOne($_SESSION['user_id']);
 
+        return $this->entityManager->getRepository(Task::class)->createTask($title, $description, $expires, $user);
     }
 }

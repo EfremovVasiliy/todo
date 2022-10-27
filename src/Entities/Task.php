@@ -20,13 +20,13 @@ class Task
     private ?int $id = null;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length="300")
      * @var string
      */
     private string $title;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text", length="1000")
      * @var string
      */
     private string $description;
@@ -40,7 +40,6 @@ class Task
 
     /**
      * @ORM\Column(type="datetime")
-     * @ORM\GeneratedValue()
      * @var DateTime
      */
     private DateTime $created_at;
@@ -51,12 +50,13 @@ class Task
      */
     private DateTime $expires;
 
-    public function __construct(string $title, string $description, User $user, DateTime $expires)
+    public function __construct(string $title, string $description, DateTime $expires, User $user)
     {
         $this->title = $title;
         $this->description = $description;
         $this->user = $user;
         $this->expires = $expires;
+        $this->created_at = new DateTime('now');
     }
 
     /**
