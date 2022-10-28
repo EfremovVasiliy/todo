@@ -16,6 +16,8 @@ $container->getBuilder()->register(UserServiceRepositoryInterface::class, UserDa
 $container->getBuilder()->register(UserService::class, UserService::class)
     ->addArgument(DB::db())
     ->addArgument(new Reference(ValidationService::class));
-$container->getBuilder()->register(TaskService::class, TaskService::class)->addArgument(DB::db());
+$container->getBuilder()->register(TaskService::class, TaskService::class)
+    ->addArgument(DB::db())
+    ->addArgument(new Reference(ValidationService::class));
 $container->getBuilder()->register(ValidationService::class, ValidationService::class);
 $container->getBuilder()->register(DB::class, DB::class);

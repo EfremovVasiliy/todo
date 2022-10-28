@@ -47,12 +47,16 @@ class TaskController extends Controller
 
     /**
      * @param ServerRequestInterface $request
-     * @return void
+     * @return Response|void
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      * @throws \Exception
      */
-    public function store(ServerRequestInterface $request): void
+    public function store(ServerRequestInterface $request)
     {
-        $this->taskService->create($request);
+        $errors = $this->taskService->create($request);
+        if (!empty($errors)) return $this->html('task/create', 'Create new task', ['errors' =>$errors]);
         header('Location: /');
     }
 
@@ -71,12 +75,20 @@ class TaskController extends Controller
 
     /**
      * @param ServerRequestInterface $request
-     * @return void
+     * @return Response|void
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      * @throws \Exception
      */
-    public function edit(ServerRequestInterface $request): void
+    public function edit(ServerRequestInterface $request)
     {
-        $this->taskService->edit($request);
+        $task = $this->taskService->find($request->getParsedBody()['task_id']);
+        $errors = $this->taskService->edit($request);
+        if (!empty($errors)) return $this->html('task/update', 'Update task', [
+            'errors' => $errors,
+            'task' => $task
+        ]);
         header('Location: /');
     }
 

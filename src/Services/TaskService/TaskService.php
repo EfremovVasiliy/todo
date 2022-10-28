@@ -4,16 +4,20 @@ namespace App\Services\TaskService;
 
 use App\Entities\Task;
 use App\Entities\User;
+use App\Services\ValidationService\Rule;
+use App\Services\ValidationService\ValidationService;
 use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\ServerRequestInterface;
 
 class TaskService
 {
     private EntityManager $entityManager;
+    private ValidationService $validationService;
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManager $entityManager, ValidationService $validationService)
     {
         $this->entityManager = $entityManager;
+        $this->validationService = $validationService;
     }
 
     /**
@@ -27,11 +31,21 @@ class TaskService
 
     /**
      * @param ServerRequestInterface $request
-     * @return Task
+     * @return array|void
      * @throws \Exception
      */
-    public function create(ServerRequestInterface $request): void
+    public function create(ServerRequestInterface $request)
     {
+        $validationParams = [
+            new Rule('title', FILTER_DEFAULT, 30),
+            new Rule('description', FILTER_DEFAULT, 1000),
+            new Rule('expires', FILTER_DEFAULT)
+        ];
+
+        $errors = $this->validationService->validate($request, $validationParams);
+
+        if (!empty($errors)) return $errors;
+
         $title = $request->getParsedBody()['title'];
         $description = $request->getParsedBody()['description'];
         $expires = $request->getParsedBody()['expires'];
@@ -52,11 +66,21 @@ class TaskService
 
     /**
      * @param ServerRequestInterface $request
-     * @return void
+     * @return array|void
      * @throws \Exception
      */
-    public function edit(ServerRequestInterface $request): void
+    public function edit(ServerRequestInterface $request)
     {
+        $validationParams = [
+            new Rule('title', FILTER_DEFAULT, 30),
+            new Rule('description', FILTER_DEFAULT, 1000),
+            new Rule('expires', FILTER_DEFAULT)
+        ];
+
+        $errors = $this->validationService->validate($request, $validationParams);
+
+        if (!empty($errors)) return $errors;
+
         $id = $request->getParsedBody()['task_id'];
         $title = $request->getParsedBody()['title'];
         $description = $request->getParsedBody()['description'];

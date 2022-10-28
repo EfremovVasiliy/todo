@@ -27,7 +27,19 @@ class UserDatabaseRepository extends EntityRepository implements UserServiceRepo
             ->setParameter(':email', $email);
 
         $result = $query->getQuery();
+
+        if (!$result->getResult()) {
+            return false;
+        }
         return $result->getResult()[0];
+    }
+
+    public function createUser(string $username, string $email, string $password)
+    {
+        $user = new User($username, $email, $password);
+
+        $this->_em->persist($user);
+        $this->_em->flush();
     }
 
     public function changePassword(string $currentPassword, string $newPassword, int $userId): array

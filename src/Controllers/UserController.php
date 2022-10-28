@@ -47,6 +47,13 @@ class UserController extends Controller
         return $this->html('user/change', 'Change password');
     }
 
+    /**
+     * @param ServerRequestInterface $request
+     * @return Response|void
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function change(ServerRequestInterface $request)
     {
         $errors = $this->userService->changePassword($request);
@@ -74,10 +81,13 @@ class UserController extends Controller
      * @throws OptimisticLockException
      * @throws ORMException
      */
-    public function register(ServerRequestInterface $request): void
+    public function register(ServerRequestInterface $request)
     {
         if (!Auth::check()) {
-            $this->userService->register($request);
+            $errors = $this->userService->register($request);
+            if (!empty($errors)) {
+                return $this->html('user/signup', 'Signup', ['errors' => $errors]);
+            }
         }
         header('Location: /');
     }

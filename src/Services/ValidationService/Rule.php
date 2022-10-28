@@ -6,7 +6,8 @@ class Rule
 {
     public function __construct(
         public string $object,
-        public ?int $maxLength = null,
-        public ?int $minLength = null,
+        public string $type,
+        public int $maxLength = 0,
+        public int $minLength = 0,
     ){}
 }
