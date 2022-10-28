@@ -85,6 +85,7 @@ class TaskController extends Controller
     {
         $task = $this->taskService->find($request->getParsedBody()['task_id']);
         $errors = $this->taskService->edit($request);
+
         if (!empty($errors)) return $this->html('task/update', 'Update task', [
             'errors' => $errors,
             'task' => $task
