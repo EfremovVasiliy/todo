@@ -1,6 +1,5 @@
 ### Composer template
 composer.phar
-/vendor/
 /node_modules/
 Vagrantfile
 .vagrant
