@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\ORMSetup;
 use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Yaml\Yaml;
 
 class DB
 {
@@ -16,19 +17,21 @@ class DB
     private static bool $useSimpleAnnotationReader = false;
     private static Configuration $config;
 
-    private static array $connection = [
-        'dbname' => 'todo',
-        'user' => 'user',
-        'password' => '111111',
-        'host' => 'localhost',
-        'driver' => 'pdo_mysql',
-    ];
-
     /**
      * @throws ORMException
      */
     public static function db(): EntityManager
     {
+        $params = self::getParams();
+
+        $connection = [
+            'dbname' => $params['db']['dbname'],
+            'user' => $params['db']['username'],
+            'password' => $params['db']['password'],
+            'host' => $params['db']['host'],
+            'driver' => $params['db']['driver'],
+        ];
+
         self::$config = ORMSetup::createAnnotationMetadataConfiguration(
             [__DIR__ . '/../../src/Entities'],
             self::$isDevMode,
@@ -36,6 +39,11 @@ class DB
             self::$cache,
             self::$useSimpleAnnotationReader
         );
-        return EntityManager::create(self::$connection, self::$config);
+        return EntityManager::create($connection, self::$config);
+    }
+
+    private static function getParams()
+    {
+        return Yaml::parseFile(__DIR__. '/../../config/config.yaml');
     }
 }

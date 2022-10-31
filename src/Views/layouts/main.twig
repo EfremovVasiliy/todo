@@ -42,6 +42,7 @@
                             <use xlink:href="/vendors/@coreui/icons/svg/free.svg#cil-envelope-open"></use>
                         </svg></a></li>
             </ul>
+            {% if session.user_id %}
             <ul class="header-nav ms-3">
                 <li class="nav-item dropdown"><a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         <div class="avatar avatar-md">
@@ -61,6 +62,7 @@
                     </div>
                 </li>
             </ul>
+            {% endif %}
         </div>
     </header>
     <main>
