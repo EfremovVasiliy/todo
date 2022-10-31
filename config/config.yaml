@@ -1,6 +1,6 @@
 db:
   driver: pdo_mysql
-  host: localhost
+  host: mysql
   dbname: todo
   username: root
   password: password
