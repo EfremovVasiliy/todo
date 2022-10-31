@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  nginx:
+    build: ./docker/nginx
+    ports: 
+    - "80:80"
+    volumes: 
+    - ./:/var/www/todo
+    - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+    - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+    - php
+  mysql:
+    image: mysql:latest
+    ports:
+    - "3306:3306"
+    environment:
+    - MYSQL_ROOT_PASSWORD=password
+    - MYSQL_DATABASE=todo
+    volumes:
+    - ./docker/volumes/mysql:/var/lib/mysql
+  php:
+    build: ./docker/php
+    volumes:
+    - ./:/var/www/todo
+    depends_on:
+    - mysql
