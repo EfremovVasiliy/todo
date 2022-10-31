@@ -1,6 +1,8 @@
 FROM php:8.1-fpm
 MAINTAINER Vasiliy
 
+WORKDIR /var/www/todo
+
 RUN apt-get update && \
     apt-get install -y libzip-dev && \
     apt-get install -y libpq-dev && \
@@ -8,9 +10,4 @@ RUN apt-get update && \
     
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-WORKDIR /var/www/todo
-
-CMD ["php-fpm"]
-CMD composer install
-CMD bin/doctrine orm:schema-tool:create
 CMD ["php-fpm"]
